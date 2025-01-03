@@ -8,34 +8,33 @@ const port = 3000; // Hardcoded port 3000
 // Enable CORS
 app.use(cors());
 
-// Middleware to parse URL-encoded data
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json()); // Add this line to parse JSON body
+// Middleware to parse JSON data
+app.use(express.json()); // Use express.json() for JSON body parsing
 
-// In-memory storage for messages
-let messages = [];
+// In-memory storage for submitted data
+let submissions = [];
 
-// Handle POST requests to /submit route
-app.post("/submit", (req, res) => {
-  const newData = req.body;
+// Handle GET requests to / route to show all submissions
+app.get("/", (req, res) => {
+  res.json({ submissions });
+});
 
-  if (!newData || Object.keys(newData).length === 0) {
-    return res.status(400).send("No data received!");
+// Handle GET requests to /x_submit route to submit name, email, and age
+app.get("/x_submit", (req, res) => {
+  const { name, email, age } = req.query;
+
+  if (!name || !email || !age) {
+    return res.status(400).send("Missing required fields: name, email, age");
   }
 
   try {
     // Add new data to in-memory storage
-    messages.push(newData);
+    submissions.push({ name, email, age });
 
-    res.send("Thank you! Data saved successfully.");
+    res.send("Data saved successfully.");
   } catch (error) {
     res.status(500).send("Error saving data.");
   }
-});
-
-// Endpoint to fetch messages
-app.get("/getMessages", (req, res) => {
-  res.json({ messages });
 });
 
 // Start the server
