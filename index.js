@@ -1,15 +1,16 @@
 const express = require("express");
 const cors = require("cors");
 const fs = require("fs");
-const bodyParser = require("body-parser");
 
 const app = express();
 
 // Enable CORS
 app.use(cors());
 
+// Middleware to parse incoming requests with JSON payloads
+app.use(express.json());
 // Middleware to parse URL-encoded data
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.urlencoded({ extended: true }));
 
 // Path for the JSON file
 const filePath = "add.json";
