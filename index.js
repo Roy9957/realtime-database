@@ -1,16 +1,16 @@
 const express = require("express");
 const cors = require("cors");
 const fs = require("fs");
+const bodyParser = require("body-parser");
 
 const app = express();
+const port = 3000;
 
 // Enable CORS
 app.use(cors());
 
-// Middleware to parse incoming requests with JSON payloads
-app.use(express.json());
 // Middleware to parse URL-encoded data
-app.use(express.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({ extended: true }));
 
 // Path for the JSON file
 const filePath = "add.json";
@@ -47,5 +47,7 @@ app.post("/submit", (req, res) => {
   }
 });
 
-// Export handler for Vercel
-module.exports = app;
+// Start the server
+app.listen(port, () => {
+  console.log(`Server is running at http://localhost:${port}`);
+});
