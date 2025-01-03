@@ -4,7 +4,7 @@ const fs = require("fs");
 const bodyParser = require("body-parser");
 
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3000; // Vercel will use process.env.PORT
 
 // Enable CORS
 app.use(cors());
@@ -51,3 +51,6 @@ app.post("/submit", (req, res) => {
 app.listen(port, () => {
   console.log(`Server is running at http://localhost:${port}`);
 });
+
+// Export handler for Vercel
+module.exports = app;
