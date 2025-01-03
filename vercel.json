@@ -2,14 +2,14 @@
   "version": 2,
   "builds": [
     {
-      "src": "server.js",   // Your server entry file
-      "use": "@vercel/node" // Use the Node.js builder for this project
+      "src": "server.js",   
+      "use": "@vercel/node" 
     }
   ],
   "routes": [
     {
       "src": "/(.*)",
-      "dest": "/server.js"  // All routes will be handled by server.js
+      "dest": "/server.js"  
     }
   ]
 }
