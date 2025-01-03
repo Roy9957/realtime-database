@@ -1,6 +1,5 @@
 const express = require("express");
 const cors = require("cors");
-const fs = require("fs");
 const bodyParser = require("body-parser");
 
 const app = express();
@@ -13,13 +12,8 @@ app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json()); // Add this line to parse JSON body
 
-// Path for the JSON file
-const filePath = "add.json";
-
-// Initialize the JSON file if it doesn't exist
-if (!fs.existsSync(filePath)) {
-  fs.writeFileSync(filePath, JSON.stringify([]));
-}
+// In-memory storage for messages
+let messages = [];
 
 // Handle POST requests to /submit route
 app.post("/submit", (req, res) => {
@@ -30,22 +24,18 @@ app.post("/submit", (req, res) => {
   }
 
   try {
-    // Read existing data
-    let existingData = [];
-    if (fs.existsSync(filePath)) {
-      existingData = JSON.parse(fs.readFileSync(filePath, "utf8"));
-    }
-
-    // Add new data
-    existingData.push(newData);
-
-    // Save updated data to file
-    fs.writeFileSync(filePath, JSON.stringify(existingData, null, 2));
+    // Add new data to in-memory storage
+    messages.push(newData);
 
     res.send("Thank you! Data saved successfully.");
   } catch (error) {
     res.status(500).send("Error saving data.");
   }
+});
+
+// Endpoint to fetch messages
+app.get("/getMessages", (req, res) => {
+  res.json({ messages });
 });
 
 // Start the server
