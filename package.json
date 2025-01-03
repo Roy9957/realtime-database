@@ -1,17 +1,20 @@
-{
-  "name": "my-nodejs-app",
+
+  "name": "express-server",
   "version": "1.0.0",
-  "description": "A simple chat server deployed on Vercel",
-  "main": "index.js",
+  "description": "A simple Express server deployed on Vercel",
+  "main": "server.js",
   "scripts": {
-    "start": "node index.js"
+    "start": "node server.js"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
   "dependencies": {
-    "body-parser": "^1.20.2",
+    "express": "^4.18.2",
     "cors": "^2.8.5",
-    "express": "^4.18.2"
-  }
+    "body-parser": "^1.20.2"
+  },
+  "engines": {
+    "node": "16.x"  
+  },
+  "devDependencies": {},
+  "author": "",
+  "license": "ISC"
 }
