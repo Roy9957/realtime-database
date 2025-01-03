@@ -4,13 +4,14 @@ const fs = require("fs");
 const bodyParser = require("body-parser");
 
 const app = express();
-const port = process.env.PORT || 3000; // Use dynamic port for Vercel
+const port = 3000; // Hardcoded port 3000
 
 // Enable CORS
 app.use(cors());
 
 // Middleware to parse URL-encoded data
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json()); // Add this line to parse JSON body
 
 // Path for the JSON file
 const filePath = "add.json";
@@ -51,6 +52,3 @@ app.post("/submit", (req, res) => {
 app.listen(port, () => {
   console.log(`Server is running at http://localhost:${port}`);
 });
-
-// Export handler for Vercel
-module.exports = app;
